@@ -525,6 +525,179 @@
   box-shadow: 0 0 8px rgba(212, 160, 23, 0.4);
 }
 
+/* ── Support link (external) ── */
+.nav-link-external::after {
+  content: ' \2197';
+  font-size: 0.7em;
+}
+
+/* ── Docs page ── */
+.docs {
+  padding-bottom: 4rem;
+}
+
+.docs-header {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+}
+
+.docs-header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0 0 0.5rem;
+}
+
+.docs-header p {
+  color: #777;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.docs-section {
+  margin-bottom: 2.5rem;
+}
+
+.docs-section h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #d4a017;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #222;
+}
+
+.docs-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ccc;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.docs-section p {
+  color: #999;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.docs-section p strong {
+  color: #ccc;
+}
+
+.docs-section p code,
+.docs-section p a {
+  color: #d4a017;
+}
+
+.docs-section p a:hover {
+  text-decoration: underline;
+}
+
+.docs-code {
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 0.8rem 1.2rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #4caf50;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.docs-list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 6px;
+  font-size: 0.88rem;
+}
+
+.docs-list-item span:last-child {
+  color: #999;
+}
+
+.docs-label {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 110px;
+}
+
+.docs-table {
+  border: 1px solid #222;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0.75rem 0;
+}
+
+.docs-table-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 2fr;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #1a1a1a;
+  font-size: 0.88rem;
+  align-items: center;
+}
+
+.docs-table-row:last-child {
+  border-bottom: none;
+}
+
+.docs-table-header {
+  background: #151515;
+  font-weight: 700;
+  color: #aaa;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.docs-table-row code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  color: #d4a017;
+}
+
+.docs-table-row span {
+  color: #999;
+}
+
+.docs-links {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.docs-links a {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  color: #d4a017;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: border-color 0.2s;
+}
+
+.docs-links a:hover {
+  border-color: #d4a017;
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .timeline {
@@ -569,5 +742,18 @@
 
   .navbar-brand {
     font-size: 1.1rem;
+  }
+
+  .docs-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .docs-table-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .docs-links {
+    flex-direction: column;
   }
 }

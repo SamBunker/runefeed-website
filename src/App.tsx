@@ -2,6 +2,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AlertFeed, PredictionFeed, HighProfitFeed } from './Terminal';
 import { useRuneFeed } from './useRuneFeed';
 import HowItWorks from './HowItWorks';
+import Docs from './Docs';
 import './App.css';
 
 // The WebSocket URL is injected at build time via environment variable.
@@ -146,6 +147,12 @@ function App() {
             <Link to="/how-it-works" className={`nav-link ${location.pathname === '/how-it-works' ? 'active' : ''}`}>
               How It Works
             </Link>
+            <Link to="/docs" className={`nav-link ${location.pathname === '/docs' ? 'active' : ''}`}>
+              Docs
+            </Link>
+            <a href="https://discord.com/" target="_blank" rel="noopener" className="nav-link nav-link-external">
+              Support
+            </a>
           </div>
         </div>
       </nav>
@@ -153,6 +160,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/docs" element={<Docs />} />
         </Routes>
       </div>
     </>
