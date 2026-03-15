@@ -16,6 +16,7 @@ export interface RuneFeedState {
   connected: boolean;
   cycle: number;
   clients: number;
+  nextPollIn: number; // ms until next poll cycle
 }
 
 export function useRuneFeed(wsUrl: string): RuneFeedState {
@@ -25,6 +26,7 @@ export function useRuneFeed(wsUrl: string): RuneFeedState {
     connected: false,
     cycle: 0,
     clients: 0,
+    nextPollIn: 0,
   });
 
   // useRef keeps a value that persists across renders without causing
@@ -62,7 +64,7 @@ export function useRuneFeed(wsUrl: string): RuneFeedState {
             case 'poll-start':
               return { ...prev, cycle: msg.cycle };
             case 'status':
-              return { ...prev, clients: msg.clients };
+              return { ...prev, clients: msg.clients, nextPollIn: msg.nextPollIn };
             default:
               return prev;
           }

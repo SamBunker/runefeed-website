@@ -6,7 +6,7 @@
 // In React, a "component" is a function that returns JSX (HTML-like syntax).
 // Props are the inputs — like function parameters but for UI components.
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Alert, Prediction } from './types';
 
 // ── Formatting helpers (mirrors shared/format.ts logic) ──
@@ -181,13 +181,59 @@ export function TerminalWindow({ title, children, connected, cycle }: TerminalPr
   );
 }
 
+// ── Countdown hook — ticks down from nextPollIn ──
+
+function useCountdown(nextPollIn: number): string {
+  const [remaining, setRemaining] = useState(nextPollIn);
+
+  useEffect(() => {
+    setRemaining(nextPollIn);
+  }, [nextPollIn]);
+
+  useEffect(() => {
+    if (remaining <= 0) return;
+    const timer = setInterval(() => {
+      setRemaining(prev => Math.max(0, prev - 1000));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [remaining > 0]);
+
+  const secs = Math.ceil(remaining / 1000);
+  const mins = Math.floor(secs / 60);
+  const s = secs % 60;
+  if (mins > 0) return `~${mins}m ${s}s`;
+  return `~${secs}s`;
+}
+
+// ── Waiting message ──
+
+function WaitingMessage({ connected, nextPollIn, label }: { connected: boolean; nextPollIn: number; label: string }) {
+  const countdown = useCountdown(nextPollIn);
+
+  if (!connected) {
+    return <div className="terminal-line text-dim">Connecting to feed...</div>;
+  }
+
+  return (
+    <div className="terminal-line text-dim">
+      Feed updates every 5 minutes. Next {label} in {countdown}
+    </div>
+  );
+}
+
 // ── Exported feed components ──
 
-export function AlertFeed({ alerts, connected, cycle }: { alerts: Alert[]; connected: boolean; cycle: number }) {
+interface FeedProps {
+  connected: boolean;
+  cycle: number;
+  nextPollIn: number;
+}
+
+export function AlertFeed({ alerts, connected, cycle, nextPollIn }: FeedProps & { alerts: Alert[] }) {
   return (
     <TerminalWindow title="runefeed watch" connected={connected} cycle={cycle}>
       {alerts.length === 0 ? (
-        <div className="terminal-line text-dim">Waiting for alerts...</div>
+        <WaitingMessage connected={connected} nextPollIn={nextPollIn} label="alerts" />
       ) : (
         alerts.map((alert, i) => <AlertLine key={`${alert.itemId}-${alert.timestamp}-${i}`} alert={alert} />)
       )}
@@ -195,13 +241,27 @@ export function AlertFeed({ alerts, connected, cycle }: { alerts: Alert[]; conne
   );
 }
 
-export function PredictionFeed({ predictions, connected, cycle }: { predictions: Prediction[]; connected: boolean; cycle: number }) {
+export function PredictionFeed({ predictions, connected, cycle, nextPollIn }: FeedProps & { predictions: Prediction[] }) {
   return (
     <TerminalWindow title="runefeed watch --view predictions" connected={connected} cycle={cycle}>
       {predictions.length === 0 ? (
-        <div className="terminal-line text-dim">Waiting for predictions...</div>
+        <WaitingMessage connected={connected} nextPollIn={nextPollIn} label="predictions" />
       ) : (
         predictions.map((pred, i) => <PredictionLine key={`${pred.itemId}-${pred.timestamp}-${i}`} prediction={pred} />)
+      )}
+    </TerminalWindow>
+  );
+}
+
+export function HighProfitFeed({ predictions, connected, cycle, nextPollIn }: FeedProps & { predictions: Prediction[] }) {
+  const filtered = predictions.filter(p => p.estimatedFlip !== null && p.estimatedFlip >= 100);
+
+  return (
+    <TerminalWindow title="runefeed watch --view predictions --min-profit 100" connected={connected} cycle={cycle}>
+      {filtered.length === 0 ? (
+        <WaitingMessage connected={connected} nextPollIn={nextPollIn} label="high-profit predictions" />
+      ) : (
+        filtered.map((pred, i) => <PredictionLine key={`${pred.itemId}-${pred.timestamp}-${i}`} prediction={pred} />)
       )}
     </TerminalWindow>
   );

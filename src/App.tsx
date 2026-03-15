@@ -1,5 +1,5 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { AlertFeed, PredictionFeed } from './Terminal';
+import { AlertFeed, PredictionFeed, HighProfitFeed } from './Terminal';
 import { useRuneFeed } from './useRuneFeed';
 import HowItWorks from './HowItWorks';
 import './App.css';
@@ -10,14 +10,14 @@ import './App.css';
 const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3900';
 
 function HomePage() {
-  const { alerts, predictions, connected, cycle, clients } = useRuneFeed(WS_URL);
+  const { alerts, predictions, connected, cycle, clients, nextPollIn } = useRuneFeed(WS_URL);
 
   return (
     <>
       {/* ── Hero ── */}
       <header className="hero">
         <h1 className="logo">
-          <span className="logo-ge">Rune</span>Feed
+          <span className="logo-ge">Rune</span>Feed<span className="logo-cc">.cc</span>
         </h1>
         <p className="tagline">
           Real-time Grand Exchange volume feed for Old School RuneScape.
@@ -49,7 +49,7 @@ function HomePage() {
             Items with 10x+ their normal trading volume. Updated every 5 minutes.
           </p>
         </div>
-        <AlertFeed alerts={alerts} connected={connected} cycle={cycle} />
+        <AlertFeed alerts={alerts} connected={connected} cycle={cycle} nextPollIn={nextPollIn} />
       </section>
 
       {/* ── Live Predictions ── */}
@@ -60,7 +60,18 @@ function HomePage() {
             Investment signals based on price momentum, buy windows, and cooling trends.
           </p>
         </div>
-        <PredictionFeed predictions={predictions} connected={connected} cycle={cycle} />
+        <PredictionFeed predictions={predictions} connected={connected} cycle={cycle} nextPollIn={nextPollIn} />
+      </section>
+
+      {/* ── High Profit Predictions ── */}
+      <section className="feed-section">
+        <div className="section-header">
+          <h2>High Profit Flips</h2>
+          <p className="section-desc">
+            Predictions with 100+ gp/ea estimated profit after tax. The money-makers.
+          </p>
+        </div>
+        <HighProfitFeed predictions={predictions} connected={connected} cycle={cycle} nextPollIn={nextPollIn} />
       </section>
 
       {/* ── Install ── */}
@@ -68,14 +79,13 @@ function HomePage() {
         <h2>Get Started</h2>
         <p>Install the CLI client and connect to the live feed:</p>
         <div className="code-block">
-          <code>npm install -g runefeed</code>
+          <code><span className="text-dim">$</span> runefeed watch</code>
         </div>
-        <div className="code-block">
-          <code>runefeed watch</code>
-        </div>
+        <p className="install-note coming-soon">
+          Coming soon to npm
+        </p>
         <p className="install-note">
-          All filtering happens client-side. The server broadcasts everything —
-          you decide what to see.
+          Filter what you want, how you want. The server sends everything, you control the feed.
         </p>
 
         <div className="flags-grid">
@@ -127,7 +137,7 @@ function App() {
       <nav className="navbar">
         <div className="navbar-inner">
           <Link to="/" className="navbar-brand">
-            <span className="logo-ge">Rune</span>Feed
+            <span className="logo-ge">Rune</span>Feed<span className="logo-cc">.cc</span>
           </Link>
           <div className="navbar-links">
             <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>

@@ -10,18 +10,78 @@
 .hero {
   text-align: center;
   padding: 4rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── GE Pillars — framing the page content ── */
+.page::before,
+.page::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  width: 500px;
+  height: 1400px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page::before {
+  left: 10%;
+  background-image: url('/pillar1.webp');
+}
+
+.page::after {
+  right: 10%;
+  background-image: url('/pillar2.webp');
+}
+
+.page > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1200px) {
+  .page::before,
+  .page::after {
+    width: 100px;
+    opacity: 0.04;
+  }
+}
+
+@media (max-width: 768px) {
+  .page::before,
+  .page::after {
+    display: none;
+  }
 }
 
 .logo {
+  font-family: 'Pirata One', cursive;
   font-size: 3.5rem;
-  font-weight: 700;
-  letter-spacing: -2px;
+  font-weight: 400;
+  letter-spacing: 1px;
   color: #e0e0e0;
   margin: 0;
 }
 
 .logo-ge {
   color: #d4a017;
+}
+
+.logo-cc {
+  font-family: 'Pacifico', cursive;
+  color: #888;
+  font-size: 0.4em;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  vertical-align: baseline;
+  margin-left: 2px;
 }
 
 .tagline {
@@ -294,9 +354,10 @@
 }
 
 .navbar-brand {
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: -1px;
+  font-family: 'Pirata One', cursive;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 1px;
   color: #e0e0e0;
   text-decoration: none;
 }
@@ -455,10 +516,10 @@
 .timeline-end::before {
   content: '';
   position: absolute;
-  left: -38px;
+  left: -42px;
   top: 0;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #d4a017;
   box-shadow: 0 0 8px rgba(212, 160, 23, 0.4);
@@ -499,7 +560,7 @@
   }
 
   .timeline-end::before {
-    left: -21px;
+    left: -24px;
   }
 
   .hiw-header h1 {
