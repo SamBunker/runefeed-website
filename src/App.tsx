@@ -79,11 +79,11 @@ function HomePage() {
         <h2>Get Started</h2>
         <p>Install the CLI client and connect to the live feed:</p>
         <div className="code-block">
+          <code><span className="text-dim">$</span> npm install -g runefeed</code>
+        </div>
+        <div className="code-block">
           <code><span className="text-dim">$</span> runefeed watch</code>
         </div>
-        <p className="install-note coming-soon">
-          Coming soon to npm
-        </p>
         <p className="install-note">
           Filter what you want, how you want. The server sends everything, you control the feed.
         </p>
