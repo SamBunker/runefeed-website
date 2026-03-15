@@ -10,4 +10,10 @@ services:
     pull_policy: build
     ports:
       - "9090:80"
+    networks:
+      - d-nginx_default
     restart: unless-stopped
+
+networks:
+  d-nginx_default:
+    external: true
