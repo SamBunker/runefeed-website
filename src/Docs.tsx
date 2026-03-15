@@ -220,6 +220,23 @@ $ runefeed serve`}</pre>
         </p>
       </section>
 
+      {/* ── Feedback ── */}
+      <section className="docs-section">
+        <h2>Suggestions &amp; Feedback</h2>
+        <p>
+          Got any suggestions or features for RuneFeed? We'd love to hear them.
+          Open an issue on GitHub or reach out on Discord.
+        </p>
+        <div className="docs-links">
+          <a href="https://github.com/SamBunker/runefeed/issues" target="_blank" rel="noopener">
+            Open an Issue
+          </a>
+          <a href="https://discord.com/" target="_blank" rel="noopener">
+            Join the Discord
+          </a>
+        </div>
+      </section>
+
       {/* ── Open Source ── */}
       <section className="docs-section">
         <h2>Open Source</h2>
