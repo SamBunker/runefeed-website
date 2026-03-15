@@ -6,7 +6,7 @@ import './App.css';
 
 // The WebSocket URL is injected at build time via environment variable.
 // In development: ws://localhost:3900
-// In production: wss://your-domain.com/ws (through NGINX)
+// In production: wss://your-domain.com/ws (through NGINX) 
 const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3900';
 
 function HomePage() {
