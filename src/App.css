@@ -1,0 +1,512 @@
+/* ── Page layout ── */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  padding-top: 52px;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 4rem 0 3rem;
+}
+
+.logo {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+.logo-ge {
+  color: #d4a017;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  margin: 0.5rem 0 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 1rem 0 1.5rem;
+  line-height: 1.6;
+}
+
+.status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.85rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #aaa;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.live {
+  background: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.offline {
+  background: #666;
+}
+
+.separator {
+  color: #444;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Feed sections ── */
+.feed-section {
+  margin: 3rem 0;
+}
+
+.section-header {
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  margin: 0 0 0.3rem;
+}
+
+.section-desc {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ── Terminal window ── */
+.terminal {
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-header {
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.red { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green { background: #28c840; }
+
+.terminal-title {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #888;
+  flex: 1;
+}
+
+.terminal-status {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+}
+
+.terminal-status.connected { color: #4caf50; }
+.terminal-status.disconnected { color: #f44336; }
+
+.terminal-body {
+  padding: 1rem;
+  height: 350px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #ccc;
+  white-space: nowrap;
+}
+
+.terminal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+.terminal-line {
+  padding: 1px 0;
+}
+
+/* ── Terminal text colors (matching chalk output) ── */
+.text-red { color: #f44336; }
+.text-green { color: #4caf50; }
+.text-yellow { color: #d4a017; }
+.text-cyan { color: #00bcd4; }
+.text-magenta { color: #ce93d8; }
+.text-bold { font-weight: 700; color: #fff; }
+.text-dim { color: #666; }
+
+/* ── Install section ── */
+.install-section {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.install-section h2 {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  margin: 0 0 0.5rem;
+}
+
+.install-section > p {
+  color: #888;
+  margin: 0 0 1.5rem;
+}
+
+.code-block {
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 0.8rem 1.5rem;
+  display: inline-block;
+  margin: 0.3rem 0.5rem;
+}
+
+.code-block code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.9rem;
+  color: #4caf50;
+}
+
+.install-note {
+  color: #555;
+  font-size: 0.85rem;
+  margin: 1.5rem 0;
+}
+
+.flags-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.flag {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.flag code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #d4a017;
+}
+
+.flag span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 2rem 0;
+  border-top: 1px solid #1a1a1a;
+  margin-top: 3rem;
+}
+
+.footer p {
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.footer a {
+  color: #d4a017;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.navbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #e0e0e0;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  color: #777;
+  text-decoration: none;
+  padding: 0.3rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover {
+  color: #ccc;
+}
+
+.nav-link.active {
+  color: #d4a017;
+  border-bottom-color: #d4a017;
+}
+
+/* ── How It Works page ── */
+.how-it-works {
+  padding-bottom: 4rem;
+}
+
+.hiw-header {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+}
+
+.hiw-header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0 0 0.5rem;
+}
+
+.hiw-header p {
+  color: #777;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* ── Timeline ── */
+.timeline {
+  position: relative;
+  padding-left: 60px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Vertical line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #d4a017, #d4a01744);
+}
+
+.timeline-step {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* Node circle */
+.timeline-node {
+  position: absolute;
+  left: -60px;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.node-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #151515;
+  border: 2px solid #d4a017;
+  box-shadow: 0 0 10px rgba(212, 160, 23, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #d4a017;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Card */
+.timeline-card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.timeline-card:hover {
+  border-color: #d4a01744;
+}
+
+.timeline-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e8e8e8;
+  margin: 0 0 0.75rem;
+}
+
+.timeline-details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-details li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.88rem;
+  color: #999;
+  line-height: 1.55;
+}
+
+.timeline-details li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #555;
+}
+
+/* End cap */
+.timeline-end {
+  position: relative;
+  height: 20px;
+}
+
+.timeline-end::before {
+  content: '';
+  position: absolute;
+  left: -38px;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4a017;
+  box-shadow: 0 0 8px rgba(212, 160, 23, 0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .timeline {
+    padding-left: 46px;
+  }
+
+  .timeline::before {
+    left: 16px;
+  }
+
+  .timeline-node {
+    left: -46px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .node-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .timeline-card {
+    padding: 1rem 1.1rem;
+  }
+
+  .timeline-title {
+    font-size: 1rem;
+  }
+
+  .timeline-details li {
+    font-size: 0.82rem;
+  }
+
+  .timeline-end::before {
+    left: -21px;
+  }
+
+  .hiw-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+}

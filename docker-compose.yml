@@ -1,0 +1,13 @@
+services:
+  runefeed-website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # For local dev, point at your local RuneFeed server.
+        # For production, set this env var to wss://feed.runefeed.cc
+        VITE_WS_URL: ${VITE_WS_URL:-ws://localhost:3900}
+    pull_policy: build
+    ports:
+      - "8080:80"
+    restart: unless-stopped
