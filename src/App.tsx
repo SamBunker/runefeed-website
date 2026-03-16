@@ -1,17 +1,15 @@
+import { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AlertFeed, PredictionFeed, HighProfitFeed } from './Terminal';
-import { useRuneFeed } from './useRuneFeed';
+import { RuneFeedProvider, useRuneFeedContext } from './RuneFeedContext';
 import HowItWorks from './HowItWorks';
 import Docs from './Docs';
+import { CustomFeedsPage } from './feeds/CustomFeedsPage';
+import { PopOutFeedPage } from './feeds/PopOutFeedPage';
 import './App.css';
 
-// The WebSocket URL is injected at build time via environment variable.
-// In development: ws://localhost:3900
-// In production: wss://your-domain.com/ws (through NGINX) 
-const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3900';
-
 function HomePage() {
-  const { alerts, predictions, connected, cycle, clients, nextPollIn } = useRuneFeed(WS_URL);
+  const { alerts, predictions, connected, cycle, clients, nextPollIn } = useRuneFeedContext();
 
   return (
     <>
@@ -132,38 +130,61 @@ function HomePage() {
 
 function App() {
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isPopout = location.pathname.includes('/popout');
+
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-inner">
-          <Link to="/" className="navbar-brand">
-            <span className="logo-ge">Rune</span>Feed<span className="logo-cc">.cc</span>
-          </Link>
-          <div className="navbar-links">
-            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
-              Home
+    <RuneFeedProvider>
+      {!isPopout && (
+        <nav className="navbar">
+          <div className="navbar-inner">
+            <Link to="/" className="navbar-brand">
+              <span className="logo-ge">Rune</span>Feed<span className="logo-cc">.cc</span>
             </Link>
-            <Link to="/how-it-works" className={`nav-link ${location.pathname === '/how-it-works' ? 'active' : ''}`}>
-              How It Works
-            </Link>
-            <Link to="/docs" className={`nav-link ${location.pathname === '/docs' ? 'active' : ''}`}>
-              Docs
-            </Link>
-            <a href="https://discord.com/" target="_blank" rel="noopener" className="nav-link nav-link-external">
-              Support
-            </a>
+            <button
+              className={`hamburger ${menuOpen ? 'open' : ''}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+            <div className={`navbar-links ${menuOpen ? 'navbar-links--open' : ''}`}>
+              <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
+                Home
+              </Link>
+              <Link to="/feeds" className={`nav-link ${location.pathname === '/feeds' ? 'active' : ''}`}>
+                Custom Feeds
+              </Link>
+              <Link to="/how-it-works" className={`nav-link ${location.pathname === '/how-it-works' ? 'active' : ''}`}>
+                How It Works
+              </Link>
+              <Link to="/docs" className={`nav-link ${location.pathname === '/docs' ? 'active' : ''}`}>
+                Docs
+              </Link>
+              <a href="https://discord.com/" target="_blank" rel="noopener" className="nav-link nav-link-external">
+                Support
+              </a>
+            </div>
           </div>
-        </div>
-      </nav>
-      <div className="page">
+        </nav>
+      )}
+      <div className={isPopout ? '' : 'page'}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/feeds" element={<CustomFeedsPage />} />
+          <Route path="/feeds/popout/:panelId" element={<PopOutFeedPage />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/docs" element={<Docs />} />
         </Routes>
       </div>
-    </>
+    </RuneFeedProvider>
   );
 }
 

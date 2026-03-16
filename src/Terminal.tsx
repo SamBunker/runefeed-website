@@ -54,7 +54,7 @@ const PREDICTION_COLORS: Record<string, string> = {
 
 // ── Alert line renderer ──
 
-function AlertLine({ alert }: { alert: Alert }) {
+export function AlertLine({ alert }: { alert: Alert }) {
   const time = formatTime(alert.timestamp);
   const colorClass = ALERT_COLORS[alert.type] ?? 'text-dim';
   const avgVol = alert.spikeScore > 0 ? Math.round(alert.volume / alert.spikeScore) : 0;
@@ -87,7 +87,7 @@ function AlertLine({ alert }: { alert: Alert }) {
 
 // ── Prediction line renderer ──
 
-function PredictionLine({ prediction }: { prediction: Prediction }) {
+export function PredictionLine({ prediction }: { prediction: Prediction }) {
   const time = formatTime(prediction.timestamp);
   const colorClass = PREDICTION_COLORS[prediction.type] ?? 'text-dim';
   const changeSign = prediction.priceChangePercent >= 0 ? '+' : '';
@@ -207,7 +207,7 @@ function useCountdown(nextPollIn: number): string {
 
 // ── Waiting message ──
 
-function WaitingMessage({ connected, nextPollIn, label }: { connected: boolean; nextPollIn: number; label: string }) {
+export function WaitingMessage({ connected, nextPollIn, label }: { connected: boolean; nextPollIn: number; label: string }) {
   const countdown = useCountdown(nextPollIn);
 
   if (!connected) {
