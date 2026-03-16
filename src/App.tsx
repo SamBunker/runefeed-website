@@ -3,9 +3,13 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AlertFeed, PredictionFeed, HighProfitFeed } from './Terminal';
 import { RuneFeedProvider, useRuneFeedContext } from './RuneFeedContext';
 import HowItWorks from './HowItWorks';
-import Docs from './Docs';
+import CLI from './CLI';
+import Support from './Support';
 import { CustomFeedsPage } from './feeds/CustomFeedsPage';
 import { PopOutFeedPage } from './feeds/PopOutFeedPage';
+import { TimeFormatProvider } from './TimeFormatContext';
+import { SoundProvider } from './SoundContext';
+import { SettingsDrawer } from './SettingsDrawer';
 import './App.css';
 
 function HomePage() {
@@ -24,7 +28,7 @@ function HomePage() {
         <p className="subtitle">
           Detect massive sell-offs, buy-ins, and price surges as they happen.
           <br />
-          Filter by item, price, type, and more. All from your terminal.
+          Filter by item, price, type, and more.
         </p>
         <div className="status-bar">
           <span className={`status-dot ${connected ? 'live' : 'offline'}`} />
@@ -151,6 +155,8 @@ function App() {
   }, [location.pathname]);
 
   return (
+    <TimeFormatProvider>
+    <SoundProvider>
     <RuneFeedProvider>
       {!isPopout && (
         <nav className="navbar">
@@ -177,12 +183,12 @@ function App() {
               <Link to="/how-it-works" className={`nav-link ${location.pathname === '/how-it-works' ? 'active' : ''}`}>
                 How It Works
               </Link>
-              <Link to="/docs" className={`nav-link ${location.pathname === '/docs' ? 'active' : ''}`}>
-                Docs
+              <Link to="/cli" className={`nav-link ${location.pathname === '/cli' ? 'active' : ''}`}>
+                CLI
               </Link>
-              <a href="https://discord.com/" target="_blank" rel="noopener" className="nav-link nav-link-external">
+              <Link to="/support" className={`nav-link ${location.pathname === '/support' ? 'active' : ''}`}>
                 Support
-              </a>
+              </Link>
             </div>
           </div>
         </nav>
@@ -193,10 +199,14 @@ function App() {
           <Route path="/feeds" element={<CustomFeedsPage />} />
           <Route path="/feeds/popout/:panelId" element={<PopOutFeedPage />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/docs" element={<Docs />} />
+          <Route path="/cli" element={<CLI />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
       </div>
+      {!isPopout && <SettingsDrawer />}
     </RuneFeedProvider>
+    </SoundProvider>
+    </TimeFormatProvider>
   );
 }
 

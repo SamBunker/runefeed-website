@@ -42,7 +42,8 @@ export function CustomFeedsPage() {
   return (
     <div className="feeds-page">
       <header className="feeds-header">
-        <h1>Custom Feeds</h1>
+        <img src="/audio.webp" alt="Custom Feeds" className="page-header-icon" />
+        <h1 className="page-title">Custom Feeds</h1>
         <p>Build your own filtered feeds. All filtering runs in your browser, one shared connection to the server.</p>
         <div className="status-bar">
           <span className={`status-dot ${connected ? 'live' : 'offline'}`} />

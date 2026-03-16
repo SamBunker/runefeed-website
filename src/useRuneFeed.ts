@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import type { Alert, Prediction, WSMessage } from './types';
 
 // How many lines to keep in each terminal feed
-const MAX_LINES = 50;
+const MAX_LINES = 200;
 
 export interface RuneFeedState {
   alerts: Alert[];
@@ -19,7 +19,7 @@ export interface RuneFeedState {
   nextPollIn: number; // ms until next poll cycle
 }
 
-export function useRuneFeed(wsUrl: string): RuneFeedState {
+export function useRuneFeed(wsUrl: string, onNotification?: () => void): RuneFeedState {
   const [state, setState] = useState<RuneFeedState>({
     alerts: [],
     predictions: [],
@@ -33,6 +33,9 @@ export function useRuneFeed(wsUrl: string): RuneFeedState {
   // re-renders when it changes. Perfect for the WebSocket instance.
   const wsRef = useRef<WebSocket | null>(null);
   const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const onNotificationRef = useRef(onNotification);
+  onNotificationRef.current = onNotification;
+  const lastSoundRef = useRef(0);
 
   const connect = useCallback(() => {
     // Don't reconnect if already connected
@@ -51,16 +54,28 @@ export function useRuneFeed(wsUrl: string): RuneFeedState {
 
         setState(prev => {
           switch (msg.type) {
-            case 'alert':
+            case 'alert': {
+              const now = Date.now();
+              if (now - lastSoundRef.current > 5000) {
+                lastSoundRef.current = now;
+                onNotificationRef.current?.();
+              }
               return {
                 ...prev,
                 alerts: [msg.data, ...prev.alerts].slice(0, MAX_LINES),
               };
-            case 'prediction':
+            }
+            case 'prediction': {
+              const now = Date.now();
+              if (now - lastSoundRef.current > 5000) {
+                lastSoundRef.current = now;
+                onNotificationRef.current?.();
+              }
               return {
                 ...prev,
                 predictions: [msg.data, ...prev.predictions].slice(0, MAX_LINES),
               };
+            }
             case 'poll-start':
               return { ...prev, cycle: msg.cycle };
             case 'status':

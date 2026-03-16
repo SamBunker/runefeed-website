@@ -1,105 +1,134 @@
-const steps = [
+import { useState } from 'react';
+import './HowItWorks.css';
+
+interface Step {
+  id: number;
+  icon: string;
+  title: string;
+  description: string;
+  richContent?: boolean;
+}
+
+const steps: Step[] = [
   {
-    number: 1,
-    title: 'OSRS Wiki Real-Time Prices API',
-    details: [
-      'The OSRS Wiki provides a free API with real-time Grand Exchange prices.',
-      'Endpoints: /latest (current prices), /5m (5-minute averages), /1h (hourly averages).',
-      'Data includes buy/sell prices, volumes, and timestamps for every tradeable item.',
-    ],
+    id: 1,
+    icon: '🏛️',
+    title: 'The Grand Exchange',
+    description: '',
+    richContent: true,
   },
   {
-    number: 2,
-    title: 'RuneFeed Server Polls the API',
-    details: [
-      'Every 5 minutes, the server fetches the latest /5m interval data.',
-      'Every 60 seconds, it refreshes /latest for current prices.',
-      'On startup, it backfills a rolling window (last 60 minutes of history).',
-    ],
+    id: 2,
+    icon: '👁️',
+    title: 'The Watcher',
+    description:
+      'RuneFeed polls the Wiki API every 5 minutes for volume data and every 60 seconds for latest prices. It builds a rolling 60-minute window of trade history, compares current activity against the average, and classifies what\'s happening: volume spikes, price momentum, dip opportunities, and cooling trends.',
   },
   {
-    number: 3,
-    title: 'Rolling Window & Spike Detection',
-    details: [
-      'The server maintains a rolling window of the last 12 five-minute intervals.',
-      'For each item, it compares current volume against the rolling average.',
-      'If volume exceeds the threshold (default 10x average), it\u2019s flagged as a spike.',
-      'Multi-timeframe detection: 5m, 10m, and 30m windows catch different patterns.',
-      'Classification: SELL-OFF (>70% sells), BUY-IN (>70% buys), or SURGE (mixed).',
-    ],
+    id: 3,
+    icon: '📡',
+    title: 'The Broadcast',
+    description:
+      'Everything RuneFeed detects is pushed out over WebSocket the moment it\'s ready. No refreshing, no polling on your end. Connect once and the data streams to you continuously.',
   },
   {
-    number: 4,
-    title: 'Prediction Engine',
-    details: [
-      'Compares current /5m prices against /1h averages.',
-      'MOMENTUM: price up 3%+ with 2x+ volume (something is moving).',
-      'BUY-WINDOW: price down 5%+ from average (potential dip buy).',
-      'COOLING: was spiking but decelerating (sell signal).',
-      'STABLE: no significant movement (only shown for tracked items).',
-      'Includes GE tax calculations (2%, capped at 5M gp) in flip estimates.',
-    ],
-  },
-  {
-    number: 5,
-    title: 'WebSocket Broadcast',
-    details: [
-      'Alerts and predictions are broadcast to all connected clients via WebSocket.',
-      'Production: wss:// with TLS encryption, rate limiting, connection caps.',
-      'Local: plain ws:// with relaxed security for personal use.',
-      'Clients can subscribe to track specific items for STABLE predictions.',
-    ],
-  },
-  {
-    number: 6,
-    title: 'CLI Client Receives & Filters',
-    details: [
-      'The runefeed watch command connects and streams data in real-time.',
-      'All filtering is client-side: --f2p, --min-spike, --track, --min-profit, --resources.',
-      'Two views: alerts (volume spikes) and predictions (investment signals).',
-      'First-run setup saves your server choice to ~/.runefeed/config.json.',
-    ],
-  },
-  {
-    number: 7,
-    title: 'Your Terminal',
-    details: [
-      'Color-coded output: red for sell-offs, green for buy-ins, yellow for surges.',
-      'Shows volume, spike multiplier, average volume, prices, spreads, tax.',
-      'Trending headline pins the hottest item at the top.',
-      'Settings summary after each poll cycle so you know what you\u2019re filtering.',
-    ],
+    id: 4,
+    icon: '⚔️',
+    title: 'Your Feed',
+    description:
+      'You control what you see. Track specific items, set minimum profit or spike thresholds, filter by F2P or members, focus on resources. Use the website with custom feed panels, or run it locally as a CLI. Same live data from the same server, your way.',
   },
 ];
 
 function HowItWorks() {
+  const [revealed, setRevealed] = useState<Set<number>>(new Set());
+
+  const reveal = (id: number) => {
+    if (!revealed.has(id)) {
+      setRevealed((prev) => new Set(prev).add(id));
+    }
+  };
+
+  const allRevealed = revealed.size === steps.length;
+
   return (
-    <div className="how-it-works">
-      <header className="hiw-header">
-        <h1>How It Works</h1>
-        <p>
-          The RuneFeed pipeline, from raw API data to your terminal. Seven steps, top to bottom.
+    <div className="hiw">
+      <header className="hiw-hero">
+        <img src="/ge-logo.png" alt="Grand Exchange" className="page-header-icon" />
+        <h1 className="page-title">How It Works</h1>
+        <p className="hiw-hero-sub">
+          From the Grand Exchange to your screen in four steps.
         </p>
+        <div className="hiw-quest-status">
+          <span className={`hiw-quest-dot ${allRevealed ? 'complete' : ''}`} />
+          <span>{revealed.size} / {steps.length} revealed</span>
+        </div>
       </header>
 
-      <div className="timeline">
-        {steps.map((step) => (
-          <div className="timeline-step" key={step.number}>
-            <div className="timeline-node">
-              <span className="node-number">{step.number}</span>
+      <div className="hiw-steps">
+        {steps.map((step, index) => {
+          const isRevealed = revealed.has(step.id);
+
+          return (
+            <div key={step.id} className="hiw-step-wrapper">
+              {index > 0 && (
+                <div className={`hiw-connector ${isRevealed ? 'lit' : ''}`} />
+              )}
+
+              <div
+                className={`hiw-step ${isRevealed ? 'revealed' : ''}`}
+                onClick={() => reveal(step.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && reveal(step.id)}
+              >
+                <div className="hiw-step-header">
+                  <div className="hiw-step-number">
+                    {isRevealed ? (
+                      <span className="hiw-check">{'\u2714'}</span>
+                    ) : (
+                      <span>{step.id}</span>
+                    )}
+                  </div>
+                  <div className="hiw-step-icon">{step.icon}</div>
+                  <h3 className="hiw-step-title">{step.title}</h3>
+                  {!isRevealed && (
+                    <div className="hiw-step-chevron">{'\u25BC'}</div>
+                  )}
+                </div>
+
+                <div className={`hiw-step-body ${isRevealed ? 'visible' : ''}`}>
+                  {step.richContent ? (
+                    <div className="hiw-step-rich">
+                      <p>
+                        The{' '}
+                        <a href="https://oldschool.runescape.wiki/w/RuneScape:Real-time_Prices" target="_blank" rel="noopener">
+                          OSRS Wiki
+                        </a>
+                        {' '}partnered with RuneLite to capture real-time Grand Exchange data. Every buy and sell price, trade volume, and timestamp is recorded through the RuneLite client plugin and exposed through three endpoints:
+                      </p>
+                      <div className="hiw-endpoints">
+                        <span className="hiw-endpoint"><code>/latest</code> live prices</span>
+                        <span className="hiw-endpoint"><code>/5m</code> 5-minute averages</span>
+                        <span className="hiw-endpoint"><code>/1h</code> hourly averages</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <p>{step.description}</p>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="timeline-card">
-              <h3 className="timeline-title">{step.title}</h3>
-              <ul className="timeline-details">
-                {step.details.map((detail, i) => (
-                  <li key={i}>{detail}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-        <div className="timeline-end" />
+          );
+        })}
       </div>
+
+      {allRevealed && (
+        <div className="hiw-finale">
+          <img src="/wom_character.png" alt="Wise Old Man" className="hiw-finale-img" />
+          <p>Now go make some gp.</p>
+        </div>
+      )}
     </div>
   );
 }

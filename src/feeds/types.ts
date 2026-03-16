@@ -9,6 +9,7 @@ export interface FeedPanelConfig {
   f2pOnly: boolean;
   resourceFilter: 'all' | 'only' | 'hide';
   alertTypeFilter: string | null;
+  fontSize: number;
   settingsOpen: boolean;
 }
 
@@ -24,6 +25,7 @@ export function createDefaultFeedConfig(): FeedPanelConfig {
     f2pOnly: false,
     resourceFilter: 'all',
     alertTypeFilter: null,
+    fontSize: 12,
     settingsOpen: true,
   };
 }

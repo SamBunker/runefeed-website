@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { useRuneFeed, type RuneFeedState } from './useRuneFeed';
+import { useSound } from './SoundContext';
 
 const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3900';
 
@@ -15,7 +16,8 @@ const defaultState: RuneFeedState = {
 const RuneFeedContext = createContext<RuneFeedState>(defaultState);
 
 export function RuneFeedProvider({ children }: { children: React.ReactNode }) {
-  const state = useRuneFeed(WS_URL);
+  const { playNotification } = useSound();
+  const state = useRuneFeed(WS_URL, playNotification);
   return (
     <RuneFeedContext.Provider value={state}>
       {children}

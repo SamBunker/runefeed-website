@@ -1,0 +1,275 @@
+/* ── How It Works ── */
+
+.hiw {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+/* ── Hero ── */
+.hiw-hero {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+}
+
+
+.hiw-hero h1 {
+  font-size: 2.4rem;
+  margin: 0 0 0.5rem;
+}
+
+.hiw-hero-sub {
+  color: #777;
+  font-size: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.hiw-quest-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #888;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 20px;
+  padding: 0.35rem 1rem;
+}
+
+.hiw-quest-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #555;
+  transition: background 0.4s, box-shadow 0.4s;
+}
+
+.hiw-quest-dot.complete {
+  background: #4caf50;
+  box-shadow: 0 0 8px #4caf50;
+}
+
+/* ── Steps ── */
+.hiw-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.hiw-step-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── Connector line ── */
+.hiw-connector {
+  width: 2px;
+  height: 24px;
+  margin: 0 auto;
+  background: #222;
+  transition: background 0.4s;
+}
+
+.hiw-connector.lit {
+  background: #d4a017;
+  box-shadow: 0 0 6px rgba(212, 160, 23, 0.3);
+}
+
+/* ── Step card ── */
+.hiw-step {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.hiw-step:hover:not(.revealed) {
+  border-color: #333;
+}
+
+.hiw-step.revealed {
+  border-color: #2a2a2a;
+  cursor: default;
+}
+
+/* ── Step header ── */
+.hiw-step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+}
+
+.hiw-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #888;
+  flex-shrink: 0;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+
+.hiw-step.revealed .hiw-step-number {
+  border-color: #4caf50;
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.hiw-check {
+  font-size: 0.75rem;
+}
+
+.hiw-step-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.hiw-step-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0;
+  flex: 1;
+  user-select: text;
+}
+
+.hiw-step-chevron {
+  font-size: 0.6rem;
+  color: #555;
+  flex-shrink: 0;
+}
+
+/* ── Step body (revealed permanently) ── */
+.hiw-step-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding: 0 1.25rem;
+}
+
+.hiw-step-body.visible {
+  max-height: 300px;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.hiw-step-body p {
+  font-size: 0.88rem;
+  color: #999;
+  line-height: 1.65;
+  margin: 0;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 0.75rem;
+  user-select: text;
+  cursor: text;
+}
+
+/* ── Rich content ── */
+.hiw-step-rich p {
+  font-size: 0.88rem;
+  color: #999;
+  line-height: 1.65;
+  margin: 0;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 0.75rem;
+  user-select: text;
+  cursor: text;
+}
+
+.hiw-step-rich a {
+  color: #d4a017;
+  text-decoration: none;
+}
+
+.hiw-step-rich a:hover {
+  text-decoration: underline;
+}
+
+.hiw-endpoints {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hiw-endpoint {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 4px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.82rem;
+  color: #999;
+}
+
+.hiw-endpoint code {
+  color: #d4a017;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 700;
+  margin-right: 0.35rem;
+}
+
+/* ── Finale ── */
+.hiw-finale {
+  text-align: center;
+  margin-top: 2.5rem;
+  animation: hiw-fadeIn 0.5s ease;
+}
+
+.hiw-finale-img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 0.75rem;
+  image-rendering: pixelated;
+}
+
+.hiw-finale p {
+  color: #d4a017;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+@keyframes hiw-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .hiw-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hiw-step-header {
+    padding: 0.85rem 1rem;
+    gap: 0.6rem;
+  }
+
+  .hiw-step-icon {
+    font-size: 1.25rem;
+  }
+
+  .hiw-step-title {
+    font-size: 0.92rem;
+  }
+
+  .hiw-step-body.visible {
+    padding: 0 1rem 1rem;
+  }
+}

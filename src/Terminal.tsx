@@ -8,6 +8,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { Alert, Prediction } from './types';
+import { useTimeFormat } from './TimeFormatContext';
 
 // ── Formatting helpers (mirrors shared/format.ts logic) ──
 
@@ -24,8 +25,11 @@ function formatVol(value: number): string {
   return value.toLocaleString();
 }
 
-function formatTime(iso: string): string {
+function formatTime(iso: string, hour12: boolean): string {
   const d = new Date(iso);
+  if (hour12) {
+    return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  }
   return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
@@ -55,7 +59,8 @@ const PREDICTION_COLORS: Record<string, string> = {
 // ── Alert line renderer ──
 
 export function AlertLine({ alert }: { alert: Alert }) {
-  const time = formatTime(alert.timestamp);
+  const { timeFormat } = useTimeFormat();
+  const time = formatTime(alert.timestamp, timeFormat === '12h');
   const colorClass = ALERT_COLORS[alert.type] ?? 'text-dim';
   const avgVol = alert.spikeScore > 0 ? Math.round(alert.volume / alert.spikeScore) : 0;
   const tag = alert.resource ? 'RES' : alert.members ? 'MEM' : 'F2P';
@@ -88,7 +93,8 @@ export function AlertLine({ alert }: { alert: Alert }) {
 // ── Prediction line renderer ──
 
 export function PredictionLine({ prediction }: { prediction: Prediction }) {
-  const time = formatTime(prediction.timestamp);
+  const { timeFormat } = useTimeFormat();
+  const time = formatTime(prediction.timestamp, timeFormat === '12h');
   const colorClass = PREDICTION_COLORS[prediction.type] ?? 'text-dim';
   const changeSign = prediction.priceChangePercent >= 0 ? '+' : '';
   const tag = prediction.resource ? 'RES' : prediction.members ? 'MEM' : 'F2P';

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { FeedPanelConfig } from './types';
 import { filterAlerts, filterPredictions } from './filterFeed';
 import { FeedPanelSettings } from './FeedPanelSettings';
@@ -14,6 +14,7 @@ interface Props {
 
 export function FeedPanel({ config, onChange, onRemove, canRemove }: Props) {
   const { alerts, predictions, connected, cycle, nextPollIn } = useRuneFeedContext();
+  const [confirmRemove, setConfirmRemove] = useState(false);
 
   const filteredAlerts = useMemo(
     () => (config.viewType === 'predictions' ? [] : filterAlerts(alerts, config)),
@@ -73,21 +74,33 @@ export function FeedPanel({ config, onChange, onRemove, canRemove }: Props) {
           <button className="feed-panel-btn" onClick={handlePopOut} title="Pop out">
             {'\u2197'}
           </button>
-          {canRemove && (
-            <button className="feed-panel-btn feed-panel-btn-remove" onClick={onRemove} title="Remove">
-              {'\u2212'}
-            </button>
-          )}
         </div>
       </div>
 
       {config.settingsOpen && (
-        <FeedPanelSettings
-          config={config}
-          onChange={onChange}
-          alerts={alerts}
-          predictions={predictions}
-        />
+        <>
+          <FeedPanelSettings
+            config={config}
+            onChange={onChange}
+            alerts={alerts}
+            predictions={predictions}
+          />
+          {canRemove && (
+            <div className="feed-panel-remove-zone">
+              {confirmRemove ? (
+                <div className="feed-panel-confirm">
+                  <span>Remove this feed?</span>
+                  <button className="feed-panel-confirm-yes" onClick={onRemove}>Remove</button>
+                  <button className="feed-panel-confirm-no" onClick={() => setConfirmRemove(false)}>Cancel</button>
+                </div>
+              ) : (
+                <button className="feed-panel-remove-btn" onClick={() => setConfirmRemove(true)}>
+                  Remove Feed
+                </button>
+              )}
+            </div>
+          )}
+        </>
       )}
 
       <div className="feed-panel-terminal">
@@ -98,7 +111,7 @@ export function FeedPanel({ config, onChange, onRemove, canRemove }: Props) {
               {connected ? `Cycle #${cycle}` : 'Disconnected'}
             </span>
           </div>
-          <div className="terminal-body">
+          <div className="terminal-body" style={{ fontSize: `${config.fontSize ?? 12}px` }}>
             {!hasData ? (
               <WaitingMessage connected={connected} nextPollIn={nextPollIn} label="data" />
             ) : (

@@ -118,6 +118,23 @@ export function FeedPanelSettings({ config, onChange, alerts, predictions }: Pro
         </div>
       </div>
 
+      <div className="feed-settings-row">
+        <label>Text Size</label>
+        <div className="feed-settings-font-size">
+          <button
+            onClick={() => update({ fontSize: Math.max(8, (config.fontSize ?? 12) - 1) })}
+          >
+            {'\u2212'}
+          </button>
+          <span>{config.fontSize ?? 12}px</span>
+          <button
+            onClick={() => update({ fontSize: Math.min(20, (config.fontSize ?? 12) + 1) })}
+          >
+            +
+          </button>
+        </div>
+      </div>
+
       <div className="feed-settings-row feed-settings-row-full">
         <label>Track Items</label>
         <ItemSearch
