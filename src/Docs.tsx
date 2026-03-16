@@ -189,7 +189,7 @@ $ npm run build
 $ runefeed serve`}</pre>
         <p>
           Edit <code>config/default.json</code> to tune detection thresholds, polling intervals, and security limits.
-          The server polls the OSRS Wiki API directly — no RuneFeed account or API key needed.
+          The server polls the OSRS Wiki API directly. No RuneFeed account or API key needed.
         </p>
       </section>
 

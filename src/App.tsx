@@ -77,7 +77,7 @@ function HomePage() {
       <section className="custom-feeds-promo">
         <h2>Build Your Own Feed</h2>
         <p className="section-desc">
-          Create custom feed panels with your own filters — track specific items, set profit thresholds,
+          Create custom feed panels with your own filters. Track specific items, set profit thresholds,
           filter by type, and pop panels out into separate windows.
         </p>
         <Link to="/feeds" className="promo-cta">
@@ -88,7 +88,7 @@ function HomePage() {
       {/* ── CLI ── */}
       <section className="install-section">
         <h2>Prefer the Terminal?</h2>
-        <p>Run the feed locally as a CLI — same data, right in your terminal.</p>
+        <p>Run the feed locally as a CLI. Same data, right in your terminal.</p>
         <div className="code-block">
           <code><span className="text-dim">$</span> npm install -g runefeed</code>
         </div>

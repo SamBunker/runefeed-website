@@ -43,7 +43,7 @@ export function CustomFeedsPage() {
     <div className="feeds-page">
       <header className="feeds-header">
         <h1>Custom Feeds</h1>
-        <p>Build your own filtered feeds. All filtering runs in your browser — one shared connection to the server.</p>
+        <p>Build your own filtered feeds. All filtering runs in your browser, one shared connection to the server.</p>
         <div className="status-bar">
           <span className={`status-dot ${connected ? 'live' : 'offline'}`} />
           <span>{connected ? 'LIVE' : 'OFFLINE'}</span>
