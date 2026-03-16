@@ -164,11 +164,6 @@ export function TerminalWindow({ title, children, connected, cycle }: TerminalPr
   return (
     <div className="terminal">
       <div className="terminal-header">
-        <div className="terminal-dots">
-          <span className="dot red" />
-          <span className="dot yellow" />
-          <span className="dot green" />
-        </div>
         <span className="terminal-title">{title}</span>
         <span className={`terminal-status ${connected ? 'connected' : 'disconnected'}`}>
           {connected ? `Cycle #${cycle}` : 'Disconnected'}

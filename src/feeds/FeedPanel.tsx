@@ -68,14 +68,14 @@ export function FeedPanel({ config, onChange, onRemove, canRemove }: Props) {
             onClick={() => onChange({ ...config, settingsOpen: !config.settingsOpen })}
             title="Settings"
           >
-            {config.settingsOpen ? '\u2715' : '\u2699'}
+            {config.settingsOpen ? '\u00d7' : '\u2699'}
           </button>
           <button className="feed-panel-btn" onClick={handlePopOut} title="Pop out">
-            \u2197
+            {'\u2197'}
           </button>
           {canRemove && (
             <button className="feed-panel-btn feed-panel-btn-remove" onClick={onRemove} title="Remove">
-              \u2212
+              {'\u2212'}
             </button>
           )}
         </div>
@@ -93,11 +93,6 @@ export function FeedPanel({ config, onChange, onRemove, canRemove }: Props) {
       <div className="feed-panel-terminal">
         <div className="terminal">
           <div className="terminal-header">
-            <div className="terminal-dots">
-              <span className="dot red" />
-              <span className="dot yellow" />
-              <span className="dot green" />
-            </div>
             <span className="terminal-title">{buildTitle()}</span>
             <span className={`terminal-status ${connected ? 'connected' : 'disconnected'}`}>
               {connected ? `Cycle #${cycle}` : 'Disconnected'}

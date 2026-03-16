@@ -242,6 +242,43 @@
 .text-bold { font-weight: 700; color: #fff; }
 .text-dim { color: #666; }
 
+/* ── Custom Feeds Promo ── */
+.custom-feeds-promo {
+  margin: 4rem 0;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+}
+
+.custom-feeds-promo h2 {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  margin: 0 0 0.5rem;
+}
+
+.custom-feeds-promo .section-desc {
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+}
+
+.promo-cta {
+  display: inline-block;
+  background: #d4a017;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.promo-cta:hover {
+  background: #e6b422;
+}
+
 /* ── Install section ── */
 .install-section {
   margin: 4rem 0;
